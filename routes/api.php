@@ -22,11 +22,9 @@ Route::get('articlesAfter/{date}', 'ArticleController@articlesAfter');
 
 Route::get('articles/{article}','ArticleController@show');
 
-Route::post('articles','ArticleController@store')->middleware('auth');
 
-Route::post('articles/{article}','ArticleController@update')->middleware('auth');
 
-Route::delete('articles/{article}','ArticleController@delete')->middleware('auth');
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

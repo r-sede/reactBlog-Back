@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
+
 
 class ArticleController extends Controller
 {
 
     public $blogConfig = [
-        'paginateNumber' => 6,
+        'paginateNumber' => 10,
 
     ];
 
     public function index() {
-    	return response()->json(Article::all());
+    	return response()->json( Article::orderby('created_at', 'desc')->limit(10)->get() );
     }
 
     public function show(Article $article) {
@@ -24,7 +26,13 @@ class ArticleController extends Controller
     }
 
     public function store(Request $request) {
-    	return response()->json( Article::create($request->all()),201 );
+    	return response()->json( 
+            Article::create([
+                'articleTitle' => $request->articleTitle,
+                'articleBody' => $request->articleBody,
+                'author' => Auth::id()
+            ])
+            ,201 );
     }
 
     public function update(Request $request, Article $article) {
@@ -36,6 +44,10 @@ class ArticleController extends Controller
     public function delete(Request $request,Article $article) {
     	$article->delete();
 			return response()->json(null,204);
+    }
+
+    public function create() {
+        return view('create');
     }
 
     public function articlesAfter($date) {
