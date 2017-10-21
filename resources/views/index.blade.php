@@ -14,9 +14,10 @@
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root"></div>
-		<script src="/js/jquery.min.js" type="text/javascript"></script>
-		<script src="/js/tether.min.js" type="text/javascript"></script>
-		<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+		{{-- <script src="{{ asset('js/app.js') }}"></script>  --}}
+		{{-- <script src="/js/jquery.min.js" type="text/javascript"></script> --}}
+		{{-- <script src="/js/tether.min.js" type="text/javascript"></script> --}}
+		{{-- <script src="/js/bootstrap.min.js" type="text/javascript"></script> --}}
 		<script type="text/javascript" src="/static/js/main.d7f00603.js"></script>
 	</body>
 </html>

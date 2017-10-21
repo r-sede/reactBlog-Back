@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use App\Events\UpdateBlogEvent;
 
 
 class ArticleController extends Controller
@@ -26,24 +27,25 @@ class ArticleController extends Controller
     }
 
     public function store(Request $request) {
-    	return response()->json( 
-            Article::create([
-                'articleTitle' => $request->articleTitle,
-                'articleBody' => $request->articleBody,
-                'author' => Auth::id()
-            ])
-            ,201 );
+        $article = new Article();
+        $article->articleTitle = $request->articleTitle;
+        $article->articleBody = $request->articleBody;
+        $article->author = Auth::id();
+        $article->save();
+
+        $ev = new UpdateBlogEvent($article);
+
+    	return response()->json(null, 201 );
     }
 
     public function update(Request $request, Article $article) {
-			
 			$article->update($request->all());
 			return response()->json($article, 200);
     }
 
     public function delete(Request $request,Article $article) {
     	$article->delete();
-			return response()->json(null,204);
+		return response()->json(null, 204);
     }
 
     public function create() {
