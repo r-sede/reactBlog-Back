@@ -21,7 +21,8 @@ class ArticlesTableSeeder extends Seeder
         	Article::create([
         		'articleTitle' => $faker->sentence,
         		'articleBody' => $faker->Text,
-        		'author' => $faker->numberBetween($min=0, $max = 10),
+                'user_id' => $faker->numberBetween($min=1, $max = 11),
+        		// 'user_id' => 1,
         	]);
         }
     }

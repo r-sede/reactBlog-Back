@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Article;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,18 +11,21 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdateBlogEvent
+class UpdateBlogEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
+    
+    public $article;
+    public $authorName;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Article $article)
     {
-        //
+        $this->article = $article;
+        $this->authorName = $article->author->name;
     }
 
     /**
@@ -31,6 +35,7 @@ class UpdateBlogEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('my_channel');
     }
+
 }

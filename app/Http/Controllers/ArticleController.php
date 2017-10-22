@@ -18,7 +18,7 @@ class ArticleController extends Controller
     ];
 
     public function index() {
-    	return response()->json( Article::orderby('created_at', 'desc')->limit(10)->get() );
+    	return response()->json( Article::with('author')->orderby('created_at', 'desc')->limit(10)->get() );
     }
 
     public function show(Article $article) {
@@ -30,12 +30,15 @@ class ArticleController extends Controller
         $article = new Article();
         $article->articleTitle = $request->articleTitle;
         $article->articleBody = $request->articleBody;
-        $article->author = Auth::id();
-        $article->save();
+        $article->user_id = Auth::id();
 
-        $ev = new UpdateBlogEvent($article);
+        if($article->save()) {
+            event(new UpdateBlogEvent($article));
+            return redirect(url('/'));
+        }
 
-    	return response()->json(null, 201 );
+        // return redirect()->back()->back();
+    	// return response()->json(Auth::id(), 201 );
     }
 
     public function update(Request $request, Article $article) {

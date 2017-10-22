@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('index');
 });
@@ -18,6 +20,23 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Route::get('/bonsoir', function() {
+// 	$a = new App\Article();
+// 	$a->articleBody = 'body';
+// 	$a->articleTitle = 'title';
+// 	$a->user_id = 1;
+// 	$a->save();
+
+// 	$aa = App\Article::find($a->id);
+// 	event(new App\Events\UpdateBlogEvent($aa));
+// 	// return 'salut';
+// });
+
+// Route::get('/test', function() {
+// 	$var = App\Article::find(1);
+// 	return response()->json($var->author);
+// });
 
 Route::get('/articles/create', 'ArticleController@create')->middleware('auth');
 

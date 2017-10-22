@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Article;
 use App\Events\UpdateBlogEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,6 +27,6 @@ class UpdateBlogEventListener
      */
     public function handle(UpdateBlogEvent $event)
     {
-        //
+        
     }
 }
